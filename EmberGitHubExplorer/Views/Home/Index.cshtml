@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Github Namshub";
+}
+
+<div class="container" id="github-app"></div>
+
+<script type="text/x-handlebars" data-template-name="application">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Github Namshub</h1>
+            <hr />
+            {{outlet}}
+        </div>
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="index">
+    <p>this is the Github explorer for all of our favorite devs</p>
+    <ul>
+        {{#each dev in model}}
+        <li><a href="#">{{dev}}</a></li>
+        {{/each}}
+    </ul>
+    <p>
+        <button class="btn btn-success" {{action "clicked"}}>Click Me!</button>
+    </p>
+    <p>{{renderedOn}}</p>
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/handlebars-1.1.2.js"></script>
+<script src="~/Scripts/ember-1.5.1.js"></script>
+
+<script>
+    window.Github = Ember.Application.create({
+        rootElement : "#github-app"
+    });
+
+    Github.IndexRoute = Ember.Route.extend({
+        model: function () {
+            return [
+                "Kevin Poston",
+                "Karl Spear",
+                "Elliot Fouts"
+            ];
+        }
+    });
+
+    Github.IndexController = Ember.ArrayController.extend({
+        renderedOn: function () {
+            return new Date();
+        }.property(),
+        actions : {
+            clickMe: function () {
+                alert("I been clicked");
+            }
+        }
+    });
+</script>
